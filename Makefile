@@ -8,11 +8,14 @@ COMMON_FLAGS = --bind \
 			   -std=c++23
 
 # Debug Flags: 
-DEBUG_FLAGS
+DEBUG_FLAGS = -fsanitize=address,leak \
+			  -sASSERTIONS=1 \
+			  -sSAFE_HEAP=1 \
+			  -sDEMANGLE_SUPPORT=1 \
+# 			  -sASSERTIONS=2 \
 
 # Dev Flags: Fast build, debug symbols
-DEV_FLAGS = -O0 -gsource-map
-
+DEV_FLAGS = -O0 -gsource-map $(DEBUG_FLAGS)
 
 # Prod Flags: Optimized execution, minified JS
 PROD_FLAGS = -O3 --closure 1
