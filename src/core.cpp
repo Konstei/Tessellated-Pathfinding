@@ -10,9 +10,7 @@
 
 #include "utils.hpp"
 
-
 constexpr float SQRT_2 = 1.41421356f;
-
 
 
 // Octile Heuristic
@@ -74,12 +72,17 @@ std::vector<std::tuple<std::uint32_t, std::uint32_t>> astar_run (
             std::int64_t tx = static_cast<std::int64_t>(cell.row) + dir_x[i],
                          ty = static_cast<std::int64_t>(cell.col) + dir_y[i];
 
-            if (tx < 0 || ty < 0 || tx >= rows || ty >= cols || map[static_cast<size_t>(tx), static_cast<size_t>(ty)]) {    // I know the condition short-circuits in the case of the || operator finding a true before the map is accessed, but I reckon it's better to be sure (in case of strict compiler mode), since the conversion is done either way
-                continue;
-            }
-
             std::uint32_t ux = static_cast<std::uint32_t>(tx),
                           uy = static_cast<std::uint32_t>(ty);
+
+            // I know the condition short-circuits in the case of the || operator finding a true before the map is accessed,
+            // but I reckon it's better to be sure (in case of strict compiler mode), since the conversion/cast is done either way
+            if (
+                tx < 0 || ty < 0 || tx >= rows || ty >= cols ||
+                map[ux, uy] || map[cell.row, uy] || map[ux, cell.col]
+            ) {
+                continue;
+            }
 
             float g = g_score[cell.row, cell.col] + cost[i];
 
@@ -107,8 +110,7 @@ std::vector<std::tuple<std::uint32_t, std::uint32_t>> astar_run (
             switch (parents[ux, uy])
             {
                 case -5:
-                    ux++;
-                    uy++;
+                    ux++; uy++;
                     break;
                 
                 case -3:
@@ -116,8 +118,7 @@ std::vector<std::tuple<std::uint32_t, std::uint32_t>> astar_run (
                     break;
                 
                 case -1:
-                    ux++;
-                    uy--;
+                    ux++; uy--;
                     break;
                 
                 case -2:
@@ -129,8 +130,7 @@ std::vector<std::tuple<std::uint32_t, std::uint32_t>> astar_run (
                     break;
                 
                 case 1:
-                    ux--;
-                    uy++;
+                    ux--; uy++;
                     break;
                 
                 case 3:
@@ -138,8 +138,7 @@ std::vector<std::tuple<std::uint32_t, std::uint32_t>> astar_run (
                     break;
                 
                 case 5:
-                    ux--;
-                    uy--;
+                    ux--; uy--;
                     break;
                 
                 default:
