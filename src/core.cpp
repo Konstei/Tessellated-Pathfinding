@@ -1,7 +1,8 @@
 #include "core.hpp"
 
-#include <cmath>
+#include <cstdint>
 #include <cfloat>
+#include <cmath>
 #include <memory>
 #include <algorithm>
 #include <queue>
@@ -11,6 +12,7 @@
 #include "utils.hpp"
 
 constexpr float SQRT_2 = 1.41421356f;
+
 
 
 // Octile Heuristic
@@ -150,4 +152,6 @@ std::vector<std::tuple<std::uint32_t, std::uint32_t>> astar_run (
 
         return path;
     }
+
+    return {};
 }

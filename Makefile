@@ -10,8 +10,8 @@ COMMON_FLAGS = --bind \
 # Debug Flags: 
 DEBUG_FLAGS = -fsanitize=address,leak \
 			  -sASSERTIONS=1 \
-			  -sSAFE_HEAP=1 \
-			  -sDEMANGLE_SUPPORT=1 \
+# 			  -sSAFE_HEAP=1 \
+# 			  -sDEMANGLE_SUPPORT=1 \
 # 			  -sASSERTIONS=2 \
 
 # Dev Flags: Fast build, debug symbols
@@ -21,7 +21,7 @@ DEV_FLAGS = -O0 -gsource-map $(DEBUG_FLAGS)
 PROD_FLAGS = -O3 --closure 1
 
 # Source files and Output
-SRCS = src/core.cpp src/bindings.cpp
+SRCS = src/core.cpp src/utils.cpp bindings/bindings.cpp
 OUT_DIR = dist
 TARGET = $(OUT_DIR)/engine.js
 
